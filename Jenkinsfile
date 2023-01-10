@@ -25,7 +25,7 @@ node {
         
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
             //myapp.push("${env.BUILD_NUMBER}")
-            myapp.push("papemamadou/simple-flask-app:latest")
+            myapp.push("latest")
         }
     }
 }
