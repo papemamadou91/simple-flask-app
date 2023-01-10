@@ -9,7 +9,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
         
-        myapp = docker.build("simple-flask-app")
+        myapp = docker.build("papemamadou/simple-flask-app")
     }
 
     stage('Test APP') {
@@ -22,8 +22,9 @@ node {
     
     stage('PUBLISH') {
         /* Publish image to DockerHub */
+        //def customImage = docker.build("simple-flask-app:${env.BUILD_ID}")
         
-        docker.withRegistry('https://registry.hub.docker.com/papemamadou', 'dockerhub-credentials') {
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
             //myapp.push("${env.BUILD_NUMBER}")
             myapp.push("latest")
         }
