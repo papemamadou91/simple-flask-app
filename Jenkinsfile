@@ -23,7 +23,7 @@ node {
     stage('PUBLISH') {
         /* Publish image to DockerHub */
         
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
             myapp.push("${env.BUILD_NUMBER}")
             myapp.push("latest")
         }
