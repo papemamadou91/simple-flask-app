@@ -33,7 +33,7 @@ node {
  
     stage('Deploy to PREPROD') {
         /* Deploy a container for PREPROD */
-        sh 'docker stop preprod && docker rm preprod'
+        sh 'sudo docker ps -q --filter "name=preprod" | grep -q . && docker stop preprod && docker rm -fv preprod'
         myapp.run(' --restart always --name preprod -p 5000:5000')   
       	//    sh 'docker run --restart always --name preprod -d -p 5000:5000 papemamadou/simple-flask-app:latest'
     }
@@ -44,7 +44,7 @@ node {
     
     stage('Deploy to PROD') {
         /* Deploy a container for PROD */
-        sh 'docker stop prod && docker rm prod'
+        sh 'sudo docker ps -q --filter "name=prod" | grep -q . && docker stop prod && docker rm -fv prod'
         myapp.run('--restart always --name prod -p 5000:5000')   
     }
 }
