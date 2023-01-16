@@ -25,7 +25,7 @@ node {
         //def customImage = docker.build("simple-flask-app:${env.BUILD_ID}")
         
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-            //myapp.push("${env.BUILD_NUMBER}")
+            myapp.push("${env.BUILD_NUMBER}")
             myapp.push("latest")
         }
     }
