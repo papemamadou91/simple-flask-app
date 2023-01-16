@@ -1,5 +1,6 @@
 node {
     def myapp
+    def myimage = "papemamadou/simple-flask-app"
 
     stage('Clone repository') {
         checkout scm
@@ -9,7 +10,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
         
-        myapp = docker.build("papemamadou/simple-flask-app")
+        myapp = docker.build(myimage)
     }
 
     stage('Test APP') {
@@ -32,7 +33,7 @@ node {
  
     stage('Deploy to PREPROD') {
         /* Deploy a container for PREPROD */
-        //myapp.run('-p 5000:5000')    
-      	    sh 'docker run --name preprod -d -p 5000:5000 papemamadou/simple-flask-app:latest'
+        myapp.image(myimage:latest).run('--name preprod -d -p 5000:5000')   
+      	//    sh 'docker run --name preprod -d -p 5000:5000 papemamadou/simple-flask-app:latest'
     }
 }
