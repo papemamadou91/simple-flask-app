@@ -26,13 +26,14 @@ node {
         //def customImage = docker.build("simple-flask-app:${env.BUILD_ID}")
         
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-            myapp.push("${env.BUILD_NUMBER}")
+            //myapp.push("${env.BUILD_NUMBER}")
             myapp.push("latest")
         }
     }
  
     stage('Deploy to PREPROD') {
         /* Deploy a container for PREPROD */
+        sh 'docker stop preprod && docker rm preprod'
         myapp.run(' --restart always --name preprod -p 5000:5000')   
       	//    sh 'docker run --restart always --name preprod -d -p 5000:5000 papemamadou/simple-flask-app:latest'
     }
@@ -43,6 +44,7 @@ node {
     
     stage('Deploy to PROD') {
         /* Deploy a container for PROD */
+        sh 'docker stop prod && docker rm prod'
         myapp.run('--restart always --name prod -p 5000:5000')   
     }
 }
