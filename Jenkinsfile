@@ -33,7 +33,16 @@ node {
  
     stage('Deploy to PREPROD') {
         /* Deploy a container for PREPROD */
-        myapp.run('--name preprod -d -p 5000:5000')   
+        myapp.run('--name preprod -p 5000:5000')   
       	//    sh 'docker run --name preprod -d -p 5000:5000 papemamadou/simple-flask-app:latest'
+    }
+ 
+    stage('TEST PREPROD') {
+        sh 'sudo docker exec -it preprod sh -c "python3 test.py" | grep OK'
+    }
+    
+    stage('Deploy to PROD') {
+        /* Deploy a container for PROD */
+        myapp.run('--name prod -p 5000:5000')   
     }
 }
