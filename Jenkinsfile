@@ -29,4 +29,12 @@ node {
             myapp.push("latest")
         }
     }
+ 
+    stage('Deploy to PREPROD') {
+        /* Deploy a container for PREPROD */
+        //myapp.run('-p 5000:5000')    
+        steps {
+      	    sh 'docker run --name preprod -p 5000:5000 simple-flask-app'
+        }
+    }
 }
