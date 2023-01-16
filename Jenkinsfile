@@ -33,7 +33,7 @@ node {
  
     stage('Deploy to PREPROD') {
         /* Deploy a container for PREPROD */
-        myapp.run('--name preprod -p 5000:5000')   
+        myapp.run(' --restart always --name preprod -p 5000:5000')   
       	//    sh 'docker run --restart always --name preprod -d -p 5000:5000 papemamadou/simple-flask-app:latest'
     }
  
