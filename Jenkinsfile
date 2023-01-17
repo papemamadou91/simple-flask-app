@@ -1,6 +1,7 @@
 node {
     def myapp
     def myimage = "papemamadou/simple-flask-app"
+    def TestResult = "KO"
 
     stage('Clone repository') {
         checkout scm
