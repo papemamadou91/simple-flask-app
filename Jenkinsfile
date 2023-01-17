@@ -33,7 +33,7 @@ node {
  
     stage('Deploy to PREPROD') {
         /* Deploy a container for PREPROD */
-        sh 'docker ps -aq --filter "name=preprod" | grep -q . && docker stop preprod && docker rm -fv preprod'
+        sh 'docker ps -aq --filter name=preprod | grep -q . && docker stop preprod && docker rm -fv preprod'
         myapp.run(' --restart always --name preprod -p 5000:5000')   
     }
  
@@ -43,7 +43,7 @@ node {
     
     stage('Deploy to PROD') {
         /* Deploy a container for PROD */
-        sh 'docker ps -aq --filter "name=prod" | grep -q . && docker stop prod && docker rm -fv prod'
+        sh 'docker ps -aq --filter name=prod | grep -q . && docker stop prod && docker rm -fv prod'
         myapp.run('--restart always --name prod -p 5000:5000')   
     }
 }
