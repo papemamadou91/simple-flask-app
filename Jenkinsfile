@@ -38,7 +38,7 @@ node {
     }
  
     stage('TEST PREPROD') {
-        sh 'docker exec -it preprod sh -c "python3 test.py" | grep OK'
+        sh 'docker exec -t preprod sh -c "python3 test.py" | grep OK'
     }
     
     stage('Deploy to PROD') {
