@@ -40,7 +40,7 @@ node {
     }
  
     stage('TEST PREPROD') {
-        def TestResult = sh( script: 'docker exec -t preprod sh -c "python3 test.py" | grep OK', returnStdout: true ).trim()
+        TestResult = sh( script: 'docker exec -t preprod sh -c "python3 test.py" | grep OK', returnStdout: true ).trim()
         echo "${TestResult}"
     }
     
