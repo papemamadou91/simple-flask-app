@@ -34,7 +34,7 @@ node {
  
     stage('Deploy to PREPROD') {
         /* Deploy a container for PREPROD (ensuring to stop and remove it first) */
-        sh 'docker ps -f name=preprod -q | xargs --no-run-if-empty docker container stop'
+        sh 'docker ps -f name=^preprod$ -q | xargs --no-run-if-empty docker container stop'
         sh 'docker container ls -a -fname=^preprod$ -q | xargs -r docker container rm'
         myapp.run('--restart always --name preprod -p 5000:5000')   
     }
@@ -50,7 +50,7 @@ node {
         //sh 'docker ps -aq --filter name=prod | grep -q . && docker stop prod && docker rm -fv prod'
         echo "${TestResult}"
         sh 'docker ps -f name=^prod$ -q | xargs --no-run-if-empty docker container stop'
-        sh 'docker container ls -a -fname=prod -q | xargs -r docker container rm'
+        sh 'docker container ls -a -fname=^prod$ -q | xargs -r docker container rm'
         myapp.run('--restart always --name prod -p 5001:5000')   
     }
 }
