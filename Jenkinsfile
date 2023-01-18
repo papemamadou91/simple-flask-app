@@ -53,9 +53,18 @@ node {
     
     stage('Deploy to PROD') {
         /* Deploy a container for PROD */
-        echo "${HealthCheck}"
         sh 'docker ps -f name=^prod$ -q | xargs --no-run-if-empty docker container stop'
         sh 'docker container ls -a -fname=^prod$ -q | xargs -r docker container rm'
         myapp.run('--restart always --name prod -p 5001:5000')   
+    }
+
+     stage('TEST PROD') {
+        HealthCheck = sh( script: 'curl -Is  http://localhost:5001 | head -n 1 | awk \'{print $2}\'', returnStdout: true ).trim()
+        echo "${HealthCheck}"
+        
+        if (HealthCheck.equals("200")) {
+        } else {
+          sh "echo ERROR ${HealthCheck} ; exit 1" // this fails the stage
+       }
     }
 }
