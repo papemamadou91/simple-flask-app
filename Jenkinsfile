@@ -41,12 +41,12 @@ node {
  
     stage('TEST PREPROD') {
         //TestResult = sh( script: 'docker exec -t preprod sh -c "python3 test.py" | grep OK', returnStdout: true ).trim()
-        HealthCheck = sh( script: 'curl -Is  https://5002-port-f726586041fb48ac.labs.kodekloud.com/ | head -n 1 | awk \'{print $2}\'', returnStdout: true ).trim()
+        HealthCheck = sh( script: 'curl -Is  https://5000-port-f726586041fb48ac.labs.kodekloud.com/ | head -n 1 | awk \'{print $2}\'', returnStdout: true ).trim()
         echo "${HealthCheck}"
         
         if (HealthCheck.equals("200")) {
         } else {
-          sh "echo ${HealthCheck} ; exit 1" // this fails the stage
+          sh "echo ERROR ${HealthCheck} ; exit 1" // this fails the stage
        }
     }
     
