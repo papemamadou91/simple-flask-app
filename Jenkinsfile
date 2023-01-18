@@ -42,6 +42,7 @@ node {
     stage('TEST PREPROD') {
         TestResult = sh( script: 'docker exec -t preprod sh -c "python3 test.py" | grep OK', returnStdout: true ).trim()
         echo "${TestResult}"
+        TestResult = "KO"
         
         if (TestResult.equals("OK")) {
         } else {
