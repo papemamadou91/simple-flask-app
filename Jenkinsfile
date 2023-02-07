@@ -1,6 +1,7 @@
 node {
     def myapp
     def myimage = "papemamadou/simple-flask-app"
+    def url = "https://5000-port-cd302e391deb4670.labs.kodekloud.com"
     def HealthCheck
 
     stage('Clone repository') {
@@ -41,7 +42,7 @@ node {
  
     stage('TEST PREPROD') {
         //TestResult = sh( script: 'docker exec -t preprod sh -c "python3 test.py" | grep OK', returnStdout: true ).trim()
-        HealthCheck = sh( script: 'curl -Is  https://5000-port-f726586041fb48ac.labs.kodekloud.com/ | head -n 1 | awk \'{print $2}\'', returnStdout: true ).trim()
+        HealthCheck = sh( script: 'curl -Is  ${url} | head -n 1 | awk \'{print $2}\'', returnStdout: true ).trim()
         echo "${HealthCheck}"
         
         if (HealthCheck.equals("200")) {
